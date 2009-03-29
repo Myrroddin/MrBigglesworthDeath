@@ -8,10 +8,10 @@ local L = GetLocale() == "enUS" and {
 	MBD_INSTRUCTIONS = "Slash commands are /mrbigglesworthdeath or /mbd followed by \"sound on\" or \"sound off\" or \"default\" without the quotes.",
 	SOUNDON = "sound on",
 	SOUNDOFF = "sound off",
-    DEFAULT = "default",
+	DEFAULT = "default",
 	MBD_SOUNDON_MSSG = "MrBigglesworthDeath: Thunder sound on.",
 	MBD_SOUNDOFF_MSSG = "MrBigglesworthDeath: Thunder sound off.",
-    MBD_DEFAULT_MSSG = "MrBigglesworthDeath reverted back to default of thunder sound on.",
+	MBD_DEFAULT_MSSG = "MrBigglesworthDeath reverted back to default of thunder sound on.",
 	DEATH_MESSAGE = " %s killed %s, May he Rest In peace",
 	}
 
@@ -73,17 +73,17 @@ end
 
 function addon.SlashHandler(text)
 	text = string.lower(text)
-	local opt = addon.settings or defaults
+	local opt = addon.settings
 	if text == L.SOUNDON then
-		if opt.sound == false then
+
 			opt.sound = true
 			print(L.MBD_SOUNDON_MSSG)
-		end
+
 	elseif text == L.SOUNDOFF then
-		if opt.sound == true then
+
 			opt.sound = false
 			print(L.MBD_SOUNDOFF_MSSG)
-		end
+
 	elseif text == L.DEFAULT then
 		MrBigglesworthDeathDB[UnitName("player")] = CopyTable(defaults)
 		addon.settings = MrBigglesworthDeathDB[UnitName("player")]
@@ -92,7 +92,7 @@ function addon.SlashHandler(text)
 		-- display instructions
 		print(L.MBD_INSTRUCTIONS)
    	end
-    
+	addon.settings = opt --Really redundant, but just to make sure things get moved back
 end
 
 local function isMrBigglesworth(guid) -- function to convert hex value of Mr Bigglesworth to decimal
@@ -111,8 +111,8 @@ function addon.COMBAT_LOG_EVENT_UNFILTERED(self, event , ...)
 		if isMrBigglesworth(destGUID) then
 			local msg = string.format(L.DEATH_MESSAGE, sourceName, destName )
 			SendChatMessage(msg)
-			if self.settings.sound then
-				PlaySoundFile("\\Interface\\AddOns\\MrBigglesworthDeath\\Sounds\\thunder.wav")
+            if self.settings.sound then
+				PlaySoundFile("Interface\\AddOns\\MrBigglesworthDeath\\Sounds\\thunder.wav")
 			end
 		end
 	end
