@@ -97,7 +97,7 @@ end
 
 local function isMrBigglesworth(guid) -- function to convert hex value of Mr Bigglesworth to decimal
 	local mobid = tonumber(guid:sub(9, 12), 16)
-	if mobid == 13016 or 1316  then -- MrBiggleworth is MobID 16998, Deeprun Rat is 13016 (debug test)
+	if mobid == 16998  then -- MrBiggleworth is MobID 16998, Deeprun Rat is 13016 (debug test)
 		return true
 	end
 end
