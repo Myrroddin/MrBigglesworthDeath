@@ -1,0 +1,14 @@
+## Title: MrBigglesworthDeath
+## Notes: Tells the user who killed Mr. Bigglesworth and plays ominous thunder
+## Version: Beta 1.2
+## Author: Myrroddin of Llane
+## Interface: 30000
+## X-Category: Interface Enhancements
+## SavedVariables: MrBigglesworthDeathDB
+
+## X-LoadOn-slash: /mrbigglesworthdeath, /mbd
+## X-LoadOn-Zone: Naxxramas
+## X-LoadOn-Execute: ChatFrame1:AddMessage: ("MrBigglesworthDeath present but not loaded. Use /mrbigglesworthdeath, /mbd, or enter Naxxramas to load.")
+
+Locales\enUS.lua
+MrBigglesworthDeath.lua
