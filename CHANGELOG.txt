@@ -1,0 +1,13 @@
+Beta build 1.2
+
+Almost a complete rewrite, added slash commands:
+/mrbigglesworthdeath
+/mbd
+
+These can be followed by:
+default, sound on, sound off
+If you do not specify a command, then instructions will be printed.
+
+Everything works, including playing the optional thunder sound.
+
+Much thanks goes to OrionShock on the wowace.com forums.
