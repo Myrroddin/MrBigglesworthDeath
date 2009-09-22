@@ -5,14 +5,20 @@
 
 --local L = MrBigglesworthDeathLocalization
 local L = GetLocale() == "enUS" and {
-	MBD_INSTRUCTIONS = "Slash commands are /mrbigglesworthdeath or /mbd followed by \"sound on\" or \"sound off\" or \"default\" without the quotes.",
+	MBD_INSTRUCTIONS = "Slash commands are /mrbigglesworthdeath or /mbd followed by\n\tsound on\nsound off\ndefault\nor a chat type (say, yell, raid, party, guild)",
 	SOUNDON = "sound on",
 	SOUNDOFF = "sound off",
 	DEFAULT = "default",
 	MBD_SOUNDON_MSSG = "MrBigglesworthDeath: Thunder sound on.",
 	MBD_SOUNDOFF_MSSG = "MrBigglesworthDeath: Thunder sound off.",
-	MBD_DEFAULT_MSSG = "MrBigglesworthDeath reverted back to default of thunder sound on.",
-	DEATH_MESSAGE = " %s killed %s, May he Rest In peace",
+	MBD_DEFAULT_MSSG = "MrBigglesworthDeath reverted back to default of thunder sound on and RAID chat.",
+	DEATH_MESSAGE = " %s killed %s, May he Rest In Peace.",
+    MBD_CHAT_OUTPUT = "Using %s chat type.",
+    SAY = "say",
+    RAID = "raid",
+    YELL = "yell",
+    PARTY = "party",
+    GUILD = "guild",
 	}
 
 MrBigglesworthDeath = {}
@@ -30,7 +36,8 @@ frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
 
 local defaults = {
-		sound = true
+		sound = true,
+        chat = "RAID",
 	}
 
 --[[
@@ -68,21 +75,40 @@ function addon:VARIABLES_LOADED()
 	else
 		print(L.MBD_SOUNDOFF_MSSG)
 	end
-
+    print(L.MBD_CHAT_OUTPUT:format(self.settings.chat))
 end
 
 function addon.SlashHandler(text)
 	text = string.lower(text)
 	local opt = addon.settings
+    
 	if text == L.SOUNDON then
-
-			opt.sound = true
-			print(L.MBD_SOUNDON_MSSG)
+        opt.sound = true
+        print(L.MBD_SOUNDON_MSSG)
 
 	elseif text == L.SOUNDOFF then
-
-			opt.sound = false
-			print(L.MBD_SOUNDOFF_MSSG)
+        opt.sound = false
+        print(L.MBD_SOUNDOFF_MSSG)
+            
+    elseif text == L.SAY then
+        opt.chat = "SAY"
+        print(L.MBD_CHAT_OUTPUT:format(opt.chat))
+            
+    elseif text == L.RAID then
+        opt.chat = "RAID"            
+        print(L.MBD_CHAT_OUTPUT:format(opt.chat))
+            
+    elseif text == L.PARTY then
+        opt.chat = "PARTY"            
+        print(L.MBD_CHAT_OUTPUT:format(opt.chat))
+            
+    elseif text == L.GUILD then
+        opt.chat = "GUILD"            
+        print(L.MBD_CHAT_OUTPUT:format(opt.chat))
+            
+    elseif text == L.YELL then
+        opt.chat = "YELL"            
+        print(L.MBD_CHAT_OUTPUT:format(opt.chat))
 
 	elseif text == L.DEFAULT then
 		MrBigglesworthDeathDB[UnitName("player")] = CopyTable(defaults)
@@ -92,7 +118,6 @@ function addon.SlashHandler(text)
 		-- display instructions
 		print(L.MBD_INSTRUCTIONS)
    	end
-	addon.settings = opt --Really redundant, but just to make sure things get moved back
 end
 
 local function isMrBigglesworth(guid) -- function to convert hex value of Mr Bigglesworth to decimal
@@ -109,8 +134,8 @@ function addon.COMBAT_LOG_EVENT_UNFILTERED(self, event , ...)
 		local destGUID, destName = select(6, ...)
 
 		if isMrBigglesworth(destGUID) then
-			local msg = string.format(L.DEATH_MESSAGE, sourceName, destName )
-			SendChatMessage(msg)
+			local msg = string.format(L.DEATH_MESSAGE, sourceName, destName)
+			SendChatMessage(msg, self.settings.chat, nil, nil)
             if self.settings.sound then
 				PlaySoundFile("Interface\\AddOns\\MrBigglesworthDeath\\Sounds\\thunder.wav")
 			end
