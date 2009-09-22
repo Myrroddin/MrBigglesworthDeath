@@ -1,6 +1,6 @@
-## Title: MrBigglesworthDeath 1.3.1
+## Title: MrBigglesworthDeath 1.3.2
 ## Notes: Tells the user who killed Mr. Bigglesworth and plays ominous thunder
-## Version: 1.3.1
+## Version: 1.3.2
 ## Author: Myrroddin of Llane
 ## Interface: 30200
 ## X-Category: Interface Enhancements
