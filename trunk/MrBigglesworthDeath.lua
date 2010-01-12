@@ -19,7 +19,28 @@ local L = GetLocale() == "enUS" and {
     YELL = "yell",
     PARTY = "party",
     GUILD = "guild",
-	}
+}
+
+local L = GetLocale() == "deDE" and {
+	DEATH_MESSAGE = "%s hat %s gekillt, Möge er In Frieden ruhen.",
+	DEFAULT = "standard",
+	GUILD = "gilde",
+	MBD_CHAT_OUTPUT = "Nutze %s chat typ.",
+	MBD_DEFAULT_MSSG = "MrBigglesworthDeath wurde auf die Standardeinstellungen \"Donner sound an\" und \"Raid chat\" zurückgesetzt",
+	MBD_INSTRUCTIONS = [=[Slash Kommandos sind /mrbigglesworthdeath oder /mbd gefolgt von 
+    sound an
+sound aus
+standard
+oder einen chat typ (sagen, schreien, raid, party, gilde)]=],
+	MBD_SOUNDOFF_MSSG = "MrBigglesworthDeath: Donner sound aus",
+	MBD_SOUNDON_MSSG = "MrBigglesworthDeath: Donner sound an",
+	PARTY = "party",
+	RAID = "raid",
+	SAY = "sagen",
+	SOUNDOFF = "sound aus",
+	SOUNDON = "sound an",
+	YELL = "schreien"
+}
 
 MrBigglesworthDeath = {}
 local addon = MrBigglesworthDeath
