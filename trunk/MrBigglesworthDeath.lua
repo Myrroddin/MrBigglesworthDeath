@@ -4,43 +4,46 @@
 
 
 --local L = MrBigglesworthDeathLocalization
-local L = GetLocale() == "enUS" and {
-	MBD_INSTRUCTIONS = "Slash commands are /mrbigglesworthdeath or /mbd followed by\n\tsound on\nsound off\ndefault\nor a chat type (say, yell, raid, party, guild)",
-	SOUNDON = "sound on",
-	SOUNDOFF = "sound off",
-	DEFAULT = "default",
-	MBD_SOUNDON_MSSG = "MrBigglesworthDeath: Thunder sound on.",
-	MBD_SOUNDOFF_MSSG = "MrBigglesworthDeath: Thunder sound off.",
-	MBD_DEFAULT_MSSG = "MrBigglesworthDeath reverted back to default of thunder sound on and RAID chat.",
-	DEATH_MESSAGE = " %s killed %s, May he Rest In Peace.",
-    MBD_CHAT_OUTPUT = "Using %s chat type.",
-    SAY = "say",
-    RAID = "raid",
-    YELL = "yell",
-    PARTY = "party",
-    GUILD = "guild",
-}
-
-local L = GetLocale() == "deDE" and {
-	DEATH_MESSAGE = "%s hat %s gekillt, Möge er In Frieden ruhen.",
-	DEFAULT = "standard",
-	GUILD = "gilde",
-	MBD_CHAT_OUTPUT = "Nutze %s chat typ.",
-	MBD_DEFAULT_MSSG = "MrBigglesworthDeath wurde auf die Standardeinstellungen \"Donner sound an\" und \"Raid chat\" zurückgesetzt",
-	MBD_INSTRUCTIONS = [=[Slash Kommandos sind /mrbigglesworthdeath oder /mbd gefolgt von 
-    sound an
+local L
+if GetLocale() == "enUS" then
+	L = {
+		MBD_INSTRUCTIONS = "Slash commands are /mrbigglesworthdeath or /mbd followed by\n\tsound on\nsound off\ndefault\nor a chat type (say, yell, raid, party, guild)",
+		SOUNDON = "sound on",
+		SOUNDOFF = "sound off",
+		DEFAULT = "default",
+		MBD_SOUNDON_MSSG = "MrBigglesworthDeath: Thunder sound on.",
+		MBD_SOUNDOFF_MSSG = "MrBigglesworthDeath: Thunder sound off.",
+		MBD_DEFAULT_MSSG = "MrBigglesworthDeath reverted back to default of thunder sound on and RAID chat.",
+		DEATH_MESSAGE = " %s killed %s, May he Rest In Peace.",
+		MBD_CHAT_OUTPUT = "Using %s chat type.",
+		SAY = "say",
+		RAID = "raid",
+		YELL = "yell",
+		PARTY = "party",
+		GUILD = "guild",
+	}
+elseif GetLocale() == "deDE" then
+	L = {
+		DEATH_MESSAGE = "%s hat %s gekillt, Möge er In Frieden ruhen.",
+		DEFAULT = "standard",
+		GUILD = "gilde",
+		MBD_CHAT_OUTPUT = "Nutze %s chat typ.",
+		MBD_DEFAULT_MSSG = "MrBigglesworthDeath wurde auf die Standardeinstellungen \"Donner sound an\" und \"Raid chat\" zurückgesetzt",
+		MBD_INSTRUCTIONS = [=[Slash Kommandos sind /mrbigglesworthdeath oder /mbd gefolgt von 
+sound an
 sound aus
 standard
 oder einen chat typ (sagen, schreien, raid, party, gilde)]=],
-	MBD_SOUNDOFF_MSSG = "MrBigglesworthDeath: Donner sound aus",
-	MBD_SOUNDON_MSSG = "MrBigglesworthDeath: Donner sound an",
-	PARTY = "party",
-	RAID = "raid",
-	SAY = "sagen",
-	SOUNDOFF = "sound aus",
-	SOUNDON = "sound an",
-	YELL = "schreien"
-}
+		MBD_SOUNDOFF_MSSG = "MrBigglesworthDeath: Donner sound aus",
+		MBD_SOUNDON_MSSG = "MrBigglesworthDeath: Donner sound an",
+		PARTY = "party",
+		RAID = "raid",
+		SAY = "sagen",
+		SOUNDOFF = "sound aus",
+		SOUNDON = "sound an",
+		YELL = "schreien"
+	}
+end
 
 MrBigglesworthDeath = {}
 local addon = MrBigglesworthDeath
@@ -141,24 +144,12 @@ function addon.SlashHandler(text)
    	end
 end
 
-local function isMrBigglesworth(guid) -- function to convert hex value of Mr Bigglesworth to decimal
-	local mobid = tonumber(guid:sub(9, 12), 16)
-	if mobid == 16998  then -- MrBiggleworth is MobID 16998, Deeprun Rat is 13016 (debug test)
-		return true
-	end
-end
-
-function addon.COMBAT_LOG_EVENT_UNFILTERED(self, event , ...)
-	local combatEvent = select(2, ...)
-	if combatEvent == "PARTY_KILL" then
-		local sourceName = select(4, ...)
-		local destGUID, destName = select(6, ...)
-
-		if isMrBigglesworth(destGUID) then
-			local msg = string.format(L.DEATH_MESSAGE, sourceName, destName)
-			SendChatMessage(msg, self.settings.chat, nil, nil)
+function addon.COMBAT_LOG_EVENT_UNFILTERED(self, event, timestamp, subevent, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, ...)
+	if subevent == "PARTY_KILL" then
+		if tonumber(destGUID:sub(7, 10), 16) == 16998 then
+			SendChatMessage(string.format(L.DEATH_MESSAGE, sourceName, destName), self.settings.chat)
             if self.settings.sound then
-				PlaySoundFile("Interface\\AddOns\\MrBigglesworthDeath\\Sounds\\thunder.wav")
+				PlaySoundFile("Interface\\AddOns\\MrBigglesworthDeath\\Sounds\\thunder.mp3")
 			end
 		end
 	end
