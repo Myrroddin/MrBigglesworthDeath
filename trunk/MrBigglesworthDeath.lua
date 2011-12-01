@@ -144,7 +144,7 @@ function addon.SlashHandler(text)
    	end
 end
 
-function addon.COMBAT_LOG_EVENT_UNFILTERED(self, event, timestamp, subevent, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, ...)
+function addon.COMBAT_LOG_EVENT_UNFILTERED(self, event, timestamp, subevent, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, ...)
 	if subevent == "PARTY_KILL" then
 		if tonumber(destGUID:sub(7, 10), 16) == 16998 then
 			SendChatMessage(string.format(L.DEATH_MESSAGE, sourceName, destName), self.settings.chat)
