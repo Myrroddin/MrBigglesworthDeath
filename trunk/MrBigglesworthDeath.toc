@@ -1,8 +1,8 @@
-## Title: MrBigglesworthDeath v1.4
+## Title: MrBigglesworthDeath
 ## Notes: Tells the user who killed Mr. Bigglesworth and plays ominous thunder
-## Version: 1.4
+## Version: 1.5
 ## Author: Myrroddin of Llane
-## Interface: 40300
+## Interface: 70000
 ## SavedVariables: MrBigglesworthDeathDB
 
 ## X-LoadOn-slash: /mrbigglesworthdeath, /mbd
