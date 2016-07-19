@@ -71,8 +71,8 @@ local defaults = {
 ]]--
 
 
-function addon:ADDON_LOADED(event, arg1)
-	if arg1 == "MrBigglesworthDeath" then
+function addon:ADDON_LOADED(event, addon)
+	if addon == "MrBigglesworthDeath" then
 		SlashCmdList["MRBIGGLESWORTHDEATH"] = self.SlashHandler
 		SLASH_MRBIGGLESWORTHDEATH1 = "/mrbigglesworthdeath"
 		SLASH_MRBIGGLESWORTHDEATH2 = "/mbd"
@@ -95,11 +95,11 @@ function addon:VARIABLES_LOADED()
 		print(L.MBD_INSTRUCTIONS)
 	end
 	if self.settings.sound then
-		print(L.MBD_SOUNDON_MSSG)
+		--print(L.MBD_SOUNDON_MSSG)
 	else
-		print(L.MBD_SOUNDOFF_MSSG)
+		--print(L.MBD_SOUNDOFF_MSSG)
 	end
-    print(L.MBD_CHAT_OUTPUT:format(self.settings.chat))
+    --print(L.MBD_CHAT_OUTPUT:format(self.settings.chat))
 end
 
 function addon.SlashHandler(text)
@@ -146,10 +146,11 @@ end
 
 function addon.COMBAT_LOG_EVENT_UNFILTERED(self, event, timestamp, subevent, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, ...)
 	if subevent == "PARTY_KILL" then
-		if tonumber(destGUID:sub(7, 10), 16) == 16998 then
+		local _, _, _, _, _, npcId = strsplit("-", destGUID)
+		if tonumber(npcId) == 16998 then
 			SendChatMessage(string.format(L.DEATH_MESSAGE, sourceName, destName), self.settings.chat)
             if self.settings.sound then
-				PlaySoundFile("Interface\\AddOns\\MrBigglesworthDeath\\Sounds\\thunder.mp3")
+				PlaySoundFile("Interface\\AddOns\\MrBigglesworthDeath\\Sounds\\thunder.mp3", "Master")
 			end
 		end
 	end
