@@ -1,10 +1,11 @@
 ## Title: MrBigglesworthDeath
 ## Notes: Tells the user who killed Mr. Bigglesworth and plays ominous thunder
-## Version: 1.5
+## Version: @project-version@
 ## Author: Myrroddin of Llane
-## Interface: 70000
+## Interface: 70100
 ## SavedVariables: MrBigglesworthDeathDB
 
+## LoadManagers: AddonLoader
 ## X-LoadOn-slash: /mrbigglesworthdeath, /mbd
 ## X-LoadOn-Zone: Naxxramas
 
