@@ -1,6 +1,7 @@
 ﻿-- Addon Name  : MrBigglesworthDeath 
 -- Notes:      : Displays who killed Mr Bigglesworth, Kul'Thuzad's cat in Naxxramas to chat frame 1
 -- and plays ominous thunder in case the player missed chat.
+-- Date: @project-date-iso@
 
 local locales = {
 	enUS = {
@@ -53,9 +54,11 @@ local spelldamage = {
 local f = CreateFrame("Frame")
 
 function f:OnEvent(event, ...)
-	if not IsInInstance() then return end
+	--[===[@non-debug@
+	if not IsInInstance() then return end -- we aren't in an instance
 	local instanceID = select(8, GetInstanceInfo())
-	if instanceID ~= 533 then return end
+	if instanceID ~= 533 then return end -- the instance is not Naxxramas
+	--@end-non-debug@]===]
 	
 	local _, subevent, _, _, sourceName, _, _, destGUID, destName = ...
 	local overkill
@@ -65,6 +68,8 @@ function f:OnEvent(event, ...)
 		overkill = select(13, ...)
 	elseif subevent == "ENVIRONMENTAL_DAMAGE" then
 		overkill = select(14, ...)
+	else
+		return
 	end
 	
 	if overkill > 0 then
