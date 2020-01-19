@@ -1,9 +1,20 @@
+## Interface: 80300
 ## Title: MrBigglesworthDeath
 ## Notes: Tells the user who killed Mr. Bigglesworth
+## Notes-deDE: @localization(locale="deDE", key="Notes", namespace="ToC")@
+## Notes-esES: @localization(locale="esES", key="Notes", namespace="ToC")@
+## Notes-esMX: @localization(locale="esMX", key="Notes", namespace="ToC")@
+## Notes-frFR: @localization(locale="frFR", key="Notes", namespace="ToC")@
+## Notes-koKR: @localization(locale="koKR", key="Notes", namespace="ToC")@
+## Notes-itIT: @localization(locale="itIT", key="Notes", namespace="ToC")@
+## Notes-ptBR: @localization(locale="ptBR", key="Notes", namespace="ToC")@
+## Notes-ruRU: @localization(locale="ruRU", key="Notes", namespace="ToC")@
+## Notes-zhCN: @localization(locale="zhCN", key="Notes", namespace="ToC")@
+## Notes-zhTW: @localization(locale="zhTW", key="Notes", namespace="ToC")@
 ## Version: @project-version@
 ## Author: Myrroddin, Ketho
-## Interface: 80200
 ## X-WoWI-ID: 13033
+## X-Category: Roleplay
 
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Zone: Naxxramas
