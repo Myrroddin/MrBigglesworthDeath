@@ -1,42 +1,22 @@
-﻿-- Addon Name  : MrBigglesworthDeath 
+-- Addon Name  : MrBigglesworthDeath
 -- Notes:      : Displays who killed Mr Bigglesworth, Kul'Thuzad's cat in Naxxramas to chat frame 1
 -- and plays ominous thunder in case the player missed chat.
--- Date: @project-date-iso@
+-- Date: $Date$
 
 local locales = {
 	enUS = {
-		DEATH_MESSAGE = " %s killed %s, May he Rest In Peace.",
+		["DEATH_MESSAGE"] = " %s killed %s, May he Rest In Peace.",
 	},
-	deDE = {
-		--@localization(locale="deDE", format="lua_table")@
-	},
-	frFR = {
-		--@localization(locale="frFR", format="lua_table")@
-	},
-	ruRU = {
-		--@localization(locale="ruRU", format="lua_table")@
-	},
-	ptBR = {
-		--@localization(locale="ptBR", format="lua_table")@
-	},
-	itIT = {
-		--@localization(locale="itIT", format="lua_table")@
-	},
-	esES = {
-		--@localization(locale="esES", format="lua_table")@
-	},
-	esMX = {
-		--@localization(locale="esES", format="lua_table")@
-	},
-	zhCN = {
-		--@localization(locale="zhCN", format="lua_table")@
-	},
-	zhTW = {
-		--@localization(locale="zhTW", format="lua_table")@
-	},
-	koKR = {
-		--@localization(locale="koKR", format="lua_table")@
-	}
+	deDE = --@localization(locale="deDE", format="lua_table")@
+	frFR = --@localization(locale="frFR", format="lua_table")@
+	esES = --@localization(locale="esES", format="lua_table")@
+	esMX = --@localization(locale="esES", format="lua_table")@
+	itIT = --@localization(locale="itIT", format="lua_table")@
+	koKR = --@localization(locale="koKR", format="lua_table")@
+	ptBR = --@localization(locale="ptBR", format="lua_table")@
+	ruRU = --@localization(locale="ruRU", format="lua_table")@
+	zhCN = --@localization(locale="zhCN", format="lua_table")@
+	zhTW = --@localization(locale="zhTW", format="lua_table")@
 }
 
 local L = setmetatable(locales[GetLocale()] or locales.enUS, {__index = function(t, k)
@@ -47,7 +27,7 @@ end})
 
 local spelldamage = {
 	["SPELL_DAMAGE"] = true,
-	["SPELL_PERIODIC_DAMAGE"] = true,	
+	["SPELL_PERIODIC_DAMAGE"] = true,
 	["RANGE_DAMAGE"] = true,
 }
 
@@ -59,7 +39,7 @@ function f:OnEvent(event, ...)
 	local instanceID = select(8, GetInstanceInfo())
 	if instanceID ~= 533 then return end -- the instance is not Naxxramas
 	--@end-non-debug@]===]
-	
+
 	local _, subevent, _, _, sourceName, _, _, destGUID, destName = ...
 	local overkill
 	if spelldamage[subevent] then
@@ -71,7 +51,7 @@ function f:OnEvent(event, ...)
 	else
 		return
 	end
-	
+
 	if overkill > 0 then
 		local npcID = select(6, strsplit("-", destGUID))
 		if tonumber(npcID) == 16998 then
