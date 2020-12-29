@@ -1,5 +1,10 @@
-## Interface: 80300
-## Title: MrBigglesworthDeath
+#@retail@
+## Interface: 90002
+#@end-retail@
+#@non-retail@
+# ## Interface: 11306
+#@end-non-retail@
+## Title: Mr Bigglesworth Death
 ## Notes: Tells the user who killed Mr. Bigglesworth
 ## Notes-deDE: @localization(locale="deDE", key="Notes", namespace="ToC")@
 ## Notes-esES: @localization(locale="esES", key="Notes", namespace="ToC")@
@@ -13,6 +18,7 @@
 ## Notes-zhTW: @localization(locale="zhTW", key="Notes", namespace="ToC")@
 ## Version: @project-version@
 ## Author: Myrroddin, Ketho
+## X-Curse-Project-ID: 17919
 ## X-WoWI-ID: 13033
 ## X-Category: Roleplay
 
