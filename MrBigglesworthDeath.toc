@@ -1,5 +1,5 @@
 #@retail@
-## Interface: 90002
+## Interface: 90005
 #@end-retail@
 #@non-retail@
 # ## Interface: 11306
@@ -21,8 +21,5 @@
 ## X-Curse-Project-ID: 17919
 ## X-WoWI-ID: 13033
 ## X-Category: Roleplay
-
-## LoadManagers: AddonLoader
-## X-LoadOn-Zone: Naxxramas
 
 MrBigglesworthDeath.lua
