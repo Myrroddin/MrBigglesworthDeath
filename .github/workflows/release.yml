@@ -49,7 +49,7 @@ jobs:
       - name: Package and release for TBC
         uses: BigWigsMods/packager@master
         with:
-          args: -g bc
+          args: -g bcc
 
       # once cloned, we just run the GitHub Action for the packager project
       - name: Package and release

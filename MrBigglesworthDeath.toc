@@ -1,6 +1,6 @@
 ## Interface-Retail: 90100
 ## Interface-Classic: 11307
-## Interface-BC: 20501
+## Interface-BCC: 20501
 ## Title: Mr Bigglesworth Death
 ## Notes: Tells the user who killed Mr. Bigglesworth
 ## Notes-deDE: @localization(locale="deDE", key="Notes", namespace="ToC")@
