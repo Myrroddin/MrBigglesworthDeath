@@ -1,5 +1,5 @@
 ## Interface-Retail: 90100
-## Interface-Classic: 11307
+## Interface-Classic: 11400
 ## Interface-BCC: 20502
 ## Title: Mr Bigglesworth Death
 ## Notes: Tells the user who killed Mr. Bigglesworth
@@ -14,7 +14,7 @@
 ## Notes-zhCN: @localization(locale="zhCN", key="Notes", namespace="ToC")@
 ## Notes-zhTW: @localization(locale="zhTW", key="Notes", namespace="ToC")@
 ## Version: @project-version@
-## Author: Myrroddin, Ketho
+## Author: Sygon_Paul, Ketho
 ## X-Curse-Project-ID: 17919
 ## X-WoWI-ID: 13033
 ## X-Category: Roleplay
