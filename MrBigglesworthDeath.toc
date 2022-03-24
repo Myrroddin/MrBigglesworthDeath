@@ -17,6 +17,7 @@
 ## Author: Sygon_Paul, Ketho
 ## X-Curse-Project-ID: 17919
 ## X-WoWI-ID: 13033
+## X-Wago-ID: lQNlL8Ne
 ## X-Category: Roleplay
 
 MrBigglesworthDeath.lua
