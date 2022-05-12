@@ -1,5 +1,5 @@
 ## Interface: 90200
-## Interface-Classic: 11402
+## Interface-Classic: 11403
 ## Interface-BCC: 20504
 ## Title: Mr Bigglesworth Death
 ## Notes: Tells the user who killed Mr. Bigglesworth
