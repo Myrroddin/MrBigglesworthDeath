@@ -15,7 +15,7 @@
 ## Notes-zhTW: @localization(locale="zhTW", key="Notes", namespace="ToC")@
 ## Version: @project-version@
 ## Author: Sygon_Paul, Ketho
-## X-License: Copyright (c) 2022 Paul Vandersypen. All Rights Reserved
+## X-License: Copyright (c) 2023 Paul Vandersypen. All Rights Reserved
 ## X-Curse-Project-ID: 17919
 ## X-WoWI-ID: 13033
 ## X-Wago-ID: lQNlL8Ne
