@@ -20,5 +20,6 @@
 ## X-WoWI-ID: 13033
 ## X-Wago-ID: lQNlL8Ne
 ## X-Category: Roleplay
+## IconTexture: Interface\AddOns\MrBigglesworthDeath\Media\Logo\SniperCat
 
 MrBigglesworthDeath.lua

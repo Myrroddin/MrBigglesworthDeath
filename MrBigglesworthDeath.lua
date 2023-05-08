@@ -86,7 +86,7 @@ function f:OnEvent(event, ...)
 		local npcID = select(6, strsplit("-", destGUID))
 		if tonumber(npcID) == 16998 then
 			SendChatMessage(format(L["%s killed %s, May he Rest In Peace."], sourceName, destName), IsInRaid() and "RAID" or IsInGroup() and "PARTY" or "SAY")
-			PlaySoundFile("Interface/AddOns/MrBigglesworthDeath/Sounds/thunder.ogg", "Master")
+			PlaySoundFile("Interface/AddOns/MrBigglesworthDeath/Media/Sounds/thunder.ogg", "Master")
 			f:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
 	end
