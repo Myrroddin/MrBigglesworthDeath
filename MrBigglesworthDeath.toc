@@ -1,5 +1,5 @@
 ## Interface: 100105
-## Interface-Classic: 11403
+## Interface-Classic: 11404
 ## Interface-Wrath: 30402
 ## Title: Mr Bigglesworth Death
 ## Notes: Tells the user who killed Mr. Bigglesworth
