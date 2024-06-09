@@ -4,6 +4,7 @@
 -- Date: @project-date-iso@
 
 -- localize the addon. we don't need to specify enUS as that is the default
+---@type table
 local L = setmetatable({}, {__index = function(t, k)
 	local v = tostring(k)
 	rawset(t, k, v)
@@ -61,9 +62,10 @@ local spelldamage = {
 	["RANGE_DAMAGE"] = true,
 }
 
+---@type table
 local f = CreateFrame("Frame")
 
-function f:OnEvent(event, ...)
+function f:OnEvent(_, ...)
 	--[===[@non-debug@
 	if not IsInInstance() then return end -- we aren't in an instance
 	local instanceID = select(8, GetInstanceInfo())

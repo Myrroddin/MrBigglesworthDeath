@@ -1,6 +1,4 @@
-## Interface: 100207
-## Interface-Classic: 11502
-## Interface-Cata: 40400
+## Interface: 11502, 40400, 100207
 ## Title: Mr Bigglesworth Death
 ## Notes: Tells the user who killed Mr. Bigglesworth
 ## Notes-deDE: @localization(locale="deDE", key="Notes", namespace="ToC")@
