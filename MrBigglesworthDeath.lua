@@ -1,10 +1,9 @@
--- Addon Name  : MrBigglesworthDeath
--- Notes:      : Displays who killed Mr Bigglesworth, Kul'Thuzad's cat in Naxxramas to chat frame 1
--- and plays ominous thunder in case the player missed chat.
--- Date: @project-date-iso@
+-- Addon Name: MrBigglesworthDeath
+-- Notes: Displays who killed Mr. Bigglesworth in Naxxramas and plays thunder.
+-- Project Author: @project-author@
+-- File Author: @file-author@
 
--- localize the addon. we don't need to specify enUS as that is the default
----@type table
+-- Localization fallback
 local L = setmetatable({}, {__index = function(t, k)
 	local v = tostring(k)
 	rawset(t, k, v)
@@ -12,89 +11,73 @@ local L = setmetatable({}, {__index = function(t, k)
 end})
 
 if GetLocale() == "deDE" then
-	--@localization(locale="deDE", format="lua_additive_table")@
-	return
+	L["%s killed %s, May he Rest In Peace."] = "%s hat %s gekillt, Möge er In Frieden ruhen."
 end
 
 if GetLocale() == "esES" or GetLocale() == "esMX" then
-	--@localization(locale="esES", format="lua_additive_table")@
-	return
+	L["%s killed %s, May he Rest In Peace."] = "% s mató a% s, que descanse en paz."
 end
 
 if GetLocale() == "frFR" then
-	--@localization(locale="frFR", format="lua_additive_table")@
-	return
+	L["%s killed %s, May he Rest In Peace."] = "%s a tué %s, qu'il repose en paix."
 end
 
 if GetLocale() == "itIT" then
-	--@localization(locale="itIT", format="lua_additive_table")@
-	return
+	L["%s killed %s, May he Rest In Peace."] = "%s ucciso %s, possa riposare in pace."
 end
 
 if GetLocale() == "koKR" then
-	--@localization(locale="koKR", format="lua_additive_table")@
-	return
+	L["%s killed %s, May he Rest In Peace."] = "%s 살해 %s, 그는 평화롭게 휴식을 취할 수 있습니다."
 end
 
 if GetLocale() == "ptBR" then
-	--@localization(locale="ptBR", format="lua_additive_table")@
-	return
+	L["%s killed %s, May he Rest In Peace."] = "%s matou %s, que descanse em paz."
 end
 
 if GetLocale() == "ruRU" then
-	--@localization(locale="ruRU", format="lua_additive_table")@
-	return
+	L["%s killed %s, May he Rest In Peace."] = "%s убил %s, пусть он пухом."
 end
 
 if GetLocale() == "zhCN" then
-	--@localization(locale="zhCN", format="lua_additive_table")@
-	return
+	L["%s killed %s, May he Rest In Peace."] = "%s 杀死了％s，愿他安息。"
 end
 
 if GetLocale() == "zhTW" then
-	--@localization(locale="zhTW", format="lua_additive_table")@
-	return
+	L["%s killed %s, May he Rest In Peace."] = "％s 殺死了％s，願他安息。"
 end
 
-local spelldamage = {
-	["SPELL_DAMAGE"] = true,
-	["SPELL_PERIODIC_DAMAGE"] = true,
-	["RANGE_DAMAGE"] = true,
+-- Event filtering
+local damageTypes = {
+	SPELL_DAMAGE = 16,
+	SPELL_PERIODIC_DAMAGE = 16,
+	RANGE_DAMAGE = 16,
+	SWING_DAMAGE = 13,
+	ENVIRONMENTAL_DAMAGE = 14
 }
 
----@type table
-local f = CreateFrame("Frame")
+-- Create event frame
+local frame = CreateFrame("Frame")
 
-function f:OnEvent(_, ...)
-	--[===[@non-debug@
-	if not IsInInstance() then return end -- we aren't in an instance
-	local instanceID = select(8, GetInstanceInfo())
-	if instanceID ~= 533 then return end -- the instance is not Naxxramas
-	--@end-non-debug@]===]
+frame:SetScript("OnEvent", function(_, _, ...)
+    -- Only track inside Naxxramas
+    local _, subevent, _, _, sourceName, _, _, destGUID, destName = ...
+    local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
 
-	local _, subevent, _, _, sourceName, _, _, destGUID, destName = ...
-	local overkill
-	if spelldamage[subevent] then
-		overkill = select(16, ...)
-	elseif subevent == "SWING_DAMAGE" then
-		overkill = select(13, ...)
-	elseif subevent == "ENVIRONMENTAL_DAMAGE" then
-		overkill = select(14, ...)
-	else
-		return
-	end
+    if instanceID ~= 533 then return end
 
-	if overkill > 0 then
-		local npcID = select(6, strsplit("-", destGUID))
-		if tonumber(npcID) == 16998 then
-			SendChatMessage(format(L["%s killed %s, May he Rest In Peace."], sourceName, destName), IsInRaid() and "RAID" or IsInGroup() and "PARTY" or "SAY")
-			PlaySoundFile("Interface/AddOns/MrBigglesworthDeath/Media/Sounds/thunder.ogg", "Master")
-			f:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-		end
-	end
-end
+    local overkillIndex = damageTypes[subevent]
+    if not overkillIndex then return end
 
-f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-f:SetScript("OnEvent", function(self, event)
-	self:OnEvent(event, CombatLogGetCurrentEventInfo())
+    local overkill = select(overkillIndex, ...)
+    if overkill and overkill > 0 then
+        local npcID = tonumber(select(6, strsplit("-", destGUID)))
+        if npcID == 16998 then
+            local channel = IsInRaid() and "RAID" or IsInGroup() and "PARTY" or "SAY"
+            SendChatMessage(format(L["%s killed %s, May he Rest In Peace."], sourceName, destName), channel)
+            PlaySoundFile("Interface/AddOns/MrBigglesworthDeath/Media/Sounds/thunder.ogg", "Master")
+            frame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+        end
+    end
 end)
+
+frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
