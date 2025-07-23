@@ -48,11 +48,11 @@ end
 
 -- Event filtering
 local damageTypes = {
-	SPELL_DAMAGE = 16,
-	SPELL_PERIODIC_DAMAGE = 16,
-	RANGE_DAMAGE = 16,
-	SWING_DAMAGE = 13,
-	ENVIRONMENTAL_DAMAGE = 14
+	["SPELL_DAMAGE"] = 16,
+	["SPELL_PERIODIC_DAMAGE"] = 16,
+	["RANGE_DAMAGE"] = 16,
+	["SWING_DAMAGE"] = 13,
+	["ENVIRONMENTAL_DAMAGE"] = 14
 }
 
 -- Create event frame
