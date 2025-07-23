@@ -1,2 +1,5 @@
 package-as: MrBigglesworthDeath
 wowi-archive-previous: no
+
+igmore:
+  - README.md
