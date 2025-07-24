@@ -33,6 +33,7 @@
         "SILVER_AMOUNT_SYMBOL",
         "COPPER_AMOUNT_SYMBOL",
         "GOLD_AMOUNT_SYMBOL",
-        "ENVIRONMENTAL_DAMAGE"
+        "ENVIRONMENTAL_DAMAGE",
+        "CombatLog"
     ]
 }

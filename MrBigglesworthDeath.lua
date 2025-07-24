@@ -58,12 +58,13 @@ local damageTypes = {
 -- Create event frame
 local frame = CreateFrame("Frame")
 
-frame:SetScript("OnEvent", function(_, _, ...)
+function frame:OnEvent(_, ...)
     -- Only track inside Naxxramas
-    local _, subevent, _, _, sourceName, _, _, destGUID, destName = ...
     local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
-
     if instanceID ~= 533 then return end
+
+	-- Get combat log event info
+    local _, subevent, _, _, sourceName, _, _, destGUID, destName = ...
 
     local overkillIndex = damageTypes[subevent]
     if not overkillIndex then return end
@@ -78,6 +79,9 @@ frame:SetScript("OnEvent", function(_, _, ...)
             frame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
         end
     end
-end)
+end
 
 frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+frame:SetScript("OnEvent", function(self, event)
+	self:OnEvent(event, CombatLogGetCurrentEventInfo())
+end)
