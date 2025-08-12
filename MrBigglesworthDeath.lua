@@ -1,7 +1,7 @@
 -- Addon Name: MrBigglesworthDeath
 -- Notes: Displays who killed Mr. Bigglesworth in Naxxramas and plays thunder.
--- Project Author: @project-author@
--- File Author: @file-author@
+-- Author: @project-author@
+-- Date: @project-date-iso@
 
 -- Localization fallback
 local L = setmetatable({}, {__index = function(t, k)
