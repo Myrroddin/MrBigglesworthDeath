@@ -59,26 +59,26 @@ local damageTypes = {
 local frame = CreateFrame("Frame")
 
 function frame:OnEvent(_, ...)
-    -- Only track inside Naxxramas
-    local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
-    if instanceID ~= 533 then return end
+	-- Only track inside Naxxramas
+	local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
+	if instanceID ~= 533 then return end
 
 	-- Get combat log event info
-    local _, subevent, _, _, sourceName, _, _, destGUID, destName = ...
+	local _, subevent, _, _, sourceName, _, _, destGUID, destName = ...
 
-    local overkillIndex = damageTypes[subevent]
-    if not overkillIndex then return end
+	local overkillIndex = damageTypes[subevent]
+	if not overkillIndex then return end
 
-    local overkill = select(overkillIndex, ...)
-    if overkill and overkill > 0 then
-        local npcID = tonumber(select(6, strsplit("-", destGUID)))
-        if npcID == 16998 then
-            local channel = IsInRaid() and "RAID" or IsInGroup() and "PARTY" or "SAY"
-            SendChatMessage(format(L["%s killed %s, May he Rest In Peace."], sourceName, destName), channel)
-            PlaySoundFile("Interface/AddOns/MrBigglesworthDeath/Media/Sounds/thunder.ogg", "Master")
-            frame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-        end
-    end
+	local overkill = select(overkillIndex, ...)
+	if overkill and overkill > 0 then
+		local npcID = tonumber(select(6, strsplit("-", destGUID)))
+		if npcID == 16998 then
+			local channel = IsInRaid() and "RAID" or IsInGroup() and "PARTY" or "SAY"
+			SendChatMessage(format(L["%s killed %s, May he Rest In Peace."], sourceName, destName), channel)
+			PlaySoundFile("Interface/AddOns/MrBigglesworthDeath/Media/Sounds/thunder.ogg", "Master")
+			frame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		end
+	end
 end
 
 frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
