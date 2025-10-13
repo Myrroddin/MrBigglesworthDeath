@@ -3,6 +3,9 @@
 -- Author: @project-author@
 -- Date: @project-date-iso@
 
+-- SendChatMessage() API is exclusive to WoW Classic. Mists of Pandaria and Retail use C_ChatInfo.SendChatMessage().
+local SendChatMessage = SendChatMessage or C_ChatInfo.SendChatMessage
+
 -- Localization fallback
 local L = setmetatable({}, {__index = function(t, k)
 	local v = tostring(k)
@@ -10,40 +13,25 @@ local L = setmetatable({}, {__index = function(t, k)
 	return v
 end})
 
-if GetLocale() == "deDE" then
-	L["%s killed %s, May he Rest In Peace."] = "%s hat %s gekillt, Möge er In Frieden ruhen."
-end
-
-if GetLocale() == "esES" or GetLocale() == "esMX" then
-	L["%s killed %s, May he Rest In Peace."] = "% s mató a% s, que descanse en paz."
-end
-
-if GetLocale() == "frFR" then
-	L["%s killed %s, May he Rest In Peace."] = "%s a tué %s, qu'il repose en paix."
-end
-
-if GetLocale() == "itIT" then
-	L["%s killed %s, May he Rest In Peace."] = "%s ucciso %s, possa riposare in pace."
-end
-
-if GetLocale() == "koKR" then
-	L["%s killed %s, May he Rest In Peace."] = "%s 살해 %s, 그는 평화롭게 휴식을 취할 수 있습니다."
-end
-
-if GetLocale() == "ptBR" then
-	L["%s killed %s, May he Rest In Peace."] = "%s matou %s, que descanse em paz."
-end
-
-if GetLocale() == "ruRU" then
-	L["%s killed %s, May he Rest In Peace."] = "%s убил %s, пусть он пухом."
-end
-
-if GetLocale() == "zhCN" then
-	L["%s killed %s, May he Rest In Peace."] = "%s 杀死了％s，愿他安息。"
-end
-
-if GetLocale() == "zhTW" then
-	L["%s killed %s, May he Rest In Peace."] = "％s 殺死了％s，願他安息。"
+local locale = GetLocale()
+if locale == "deDE" then
+	--@localization(locale="deDE", format="lua_additive_table")@
+elseif locale == "esES" or locale == "esMX" then
+	--@localization(locale="esES", format="lua_additive_table")@
+elseif locale == "frFR" then
+	--@localization(locale="frFR", format="lua_additive_table")@
+elseif locale == "itIT" then
+	--@localization(locale="itIT", format="lua_additive_table")@
+elseif locale == "koKR" then
+	--@localization(locale="koKR", format="lua_additive_table")@
+elseif locale == "ptBR" then
+	--@localization(locale="ptBR", format="lua_additive_table")@
+elseif locale == "ruRU" then
+	--@localization(locale="ruRU", format="lua_additive_table")@
+elseif locale == "zhCN" then
+	--@localization(locale="zhCN", format="lua_additive_table")@
+elseif locale == "zhTW" then
+	--@localization(locale="zhTW", format="lua_additive_table")@
 end
 
 -- Event filtering
