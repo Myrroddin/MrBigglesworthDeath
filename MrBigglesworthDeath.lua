@@ -3,9 +3,6 @@
 -- Author: @project-author@
 -- Date: @project-date-iso@
 
--- SendChatMessage() API is exclusive to WoW Classic. Mists of Pandaria and Retail use C_ChatInfo.SendChatMessage().
-local SendChatMessage = SendChatMessage or C_ChatInfo.SendChatMessage
-
 -- Localization fallback
 local L = setmetatable({}, {__index = function(t, k)
 	local v = tostring(k)
@@ -49,7 +46,7 @@ local frame = CreateFrame("Frame")
 function frame:OnEvent(_, ...)
 	-- Only track inside Naxxramas
 	local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
-	if instanceID ~= 533 then return end
+	if not instanceID or instanceID ~= 533 then return end
 
 	-- Get combat log event info
 	local _, subevent, _, _, sourceName, _, _, destGUID, destName = ...
@@ -62,7 +59,7 @@ function frame:OnEvent(_, ...)
 		local npcID = tonumber(select(6, strsplit("-", destGUID)))
 		if npcID == 16998 then
 			local channel = IsInRaid() and "RAID" or IsInGroup() and "PARTY" or "SAY"
-			SendChatMessage(format(L["%s killed %s, May he Rest In Peace."], sourceName, destName), channel)
+			C_ChatInfo.SendChatMessage(format(L["%s killed %s, May he Rest In Peace."], sourceName, destName), channel)
 			PlaySoundFile("Interface/AddOns/MrBigglesworthDeath/Media/Sounds/thunder.ogg", "Master")
 			frame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
