@@ -1,4 +1,4 @@
-## Interface: 11508, 50502, 110205, 120000
+## Interface: 120001, 50503, 38000, 20505, 11508
 ## Title: Mr Bigglesworth Death
 ## Notes: Tells the user who killed Mr. Bigglesworth
 ## Notes-deDE: @localization(locale="deDE", key="Notes", namespace="ToC")@
@@ -13,11 +13,21 @@
 ## Notes-zhTW: @localization(locale="zhTW", key="Notes", namespace="ToC")@
 ## Version: @project-version@
 ## Author: Sygon_Paul, Ketho
-## X-License: Copyright (c) 2009-2025 Paul Vandersypen. All Rights Reserved
+## X-License: Copyright (c) 2009-2026 Paul Vandersypen. All Rights Reserved
 ## X-Curse-Project-ID: 17919
 ## X-WoWI-ID: 13033
 ## X-Wago-ID: lQNlL8Ne
-## X-Category: Roleplay
+## Category: Roleplay
+## Category-deDE: Rollenspiel
+## Category-esES: Juego de rol
+## Category-esMX: Juego de rol
+## Category-frFR: Jeu de rôle
+## Category-itIT: Gioco di Ruolo
+## Category-koKR: 역할 수행
+## Category-ptBR: Interpretação de Papel
+## Category-ruRU: Ролевая игра
+## Category-zhCN: 角色扮演
+## Category-zhTW: 角色扮演
 ## IconTexture: Interface\AddOns\MrBigglesworthDeath\Media\Logo\SniperCat
 
 MrBigglesworthDeath.lua

@@ -1,0 +1,53 @@
+# =========================
+# World of Warcraft Addon
+# =========================
+
+# --- Packaging / release artifacts ---
+.release/
+releases/
+dist/
+*.zip
+*.7z
+*.rar
+
+# --- Local WoW client folders (if repo is copied into game dir) ---
+_retail_/
+_classic_/
+_classic_era_/
+_ptr_/
+_beta_/
+Interface/
+WTF/
+Cache/
+Logs/
+Screenshots/
+Errors/
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Editor / IDE ---
+.idea/
+*.code-workspace
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# --- Lua tooling ---
+luac.out
+
+# --- Python (if tooling scripts are added) ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
