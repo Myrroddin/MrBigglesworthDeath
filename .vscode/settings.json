@@ -34,6 +34,7 @@
 		"COPPER_AMOUNT_SYMBOL",
 		"GOLD_AMOUNT_SYMBOL",
 		"ENVIRONMENTAL_DAMAGE",
-		"CombatLog"
+		"CombatLog",
+		"UNKNOWN"
 	]
 }
