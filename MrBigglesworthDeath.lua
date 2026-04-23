@@ -32,8 +32,10 @@ local locale = GetLocale()
 
 if locale == "deDE" then
 	--@localization(locale="deDE", format="lua_additive_table")@
-elseif locale == "esES" or locale == "esMX" then
+elseif locale == "esES" then
 	--@localization(locale="esES", format="lua_additive_table")@
+elseif locale == "esMX" then
+	--@localization(locale="esMX", format="lua_additive_table")@
 elseif locale == "frFR" then
 	--@localization(locale="frFR", format="lua_additive_table")@
 elseif locale == "itIT" then
