@@ -128,15 +128,14 @@ end
 local function HandlePartyKill(_, attackerGUID, targetGUID)
 
 	local npcID = tonumber(targetGUID:match("-(%d+)-"))
-	if npcID ~= MR_BIGGLESWORTH_ID then
-		return	end
+	if npcID ~= MR_BIGGLESWORTH_ID then return	end
 
 	local killer = UnitNameFromGUID(attackerGUID) or UNKNOWN
 	local destName = UnitNameFromGUID(targetGUID) or "Mr. Bigglesworth"
 
 	local channel = IsInRaid() and "RAID"
-		or IsInGroup() and "PARTY"
-		or "SAY"
+	or IsInGroup() and "PARTY"
+	or "SAY"
 
 	C_ChatInfo.SendChatMessage(
 		format(L["%s killed %s, May he Rest In Peace."], killer, destName), channel
@@ -183,8 +182,8 @@ local function HandleCombatLog()
 	end
 
 	local channel = IsInRaid() and "RAID"
-		or IsInGroup() and "PARTY"
-		or "SAY"
+	or IsInGroup() and "PARTY"
+	or "SAY"
 
 	C_ChatInfo.SendChatMessage(
 		format(L["%s killed %s, May he Rest In Peace."], sourceName, destName), channel

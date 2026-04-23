@@ -37,11 +37,7 @@ Desktop.ini
 *.bak
 
 # VS Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
-!.vscode/launch.json
-!.vscode/tasks.json
+.vscode/
 
 # --- Lua tooling ---
 luac.out
