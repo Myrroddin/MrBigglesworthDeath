@@ -1,0 +1,6 @@
+{
+  "flavors": ["retail", "classic", "classic_era"],
+  "diagnostics": {
+    "enable": ["need-check-nil"]
+  }
+}
