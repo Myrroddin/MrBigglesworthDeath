@@ -13,11 +13,15 @@ local GetInstanceInfo = GetInstanceInfo
 local GetLocale = GetLocale
 local GetNumGroupMembers = GetNumGroupMembers
 local GetPlayerInfoByGUID = GetPlayerInfoByGUID
+local GetTime = GetTime
 local IsInGroup = IsInGroup
 local IsInRaid = IsInRaid
 local issecretvalue = issecretvalue
 local PlaySoundFile = PlaySoundFile
+local random = math.random
 local rawset = rawset
+local RegisterAddonMessagePrefix = C_ChatInfo.RegisterAddonMessagePrefix
+local SendAddonMessage = C_ChatInfo.SendAddonMessage
 local SendChatMessage = C_ChatInfo.SendChatMessage
 local setmetatable = setmetatable
 local strsplit = strsplit
@@ -72,12 +76,17 @@ end
 local NAXXRAMAS_ID = 533
 local MR_BIGGLESWORTH_ID = 16998
 local SOUND_FILE = "Interface/AddOns/MrBigglesworthDeath/Media/Sounds/thunder.ogg"
+local MESSAGE_PREFIX = "BigglesDeath1"
 
 ------------------------------------------------------------
 -- State
 ------------------------------------------------------------
 
 local frame = CreateFrame("Frame")
+local kills = {}
+local pending
+local inNaxxramas = false
+local canCommunicate = RegisterAddonMessagePrefix(MESSAGE_PREFIX)
 
 ------------------------------------------------------------
 -- Event control
@@ -163,13 +172,50 @@ local function GetChatChannel()
 	or IsInGroup() and "PARTY"
 	or "SAY"
 end
-local function AnnounceDeath(killer, destName)
-	SendChatMessage(
-		format(L["%s killed %s, May he Rest In Peace."], killer or UNKNOWN, destName or "Mr. Bigglesworth"),
-		GetChatChannel()
-	)
+local function UpdateAnnouncement()
+	if not pending then return end
+	local kill = kills[pending.guid]
+	if kill.announced then
+		pending = nil
+		frame:SetScript("OnUpdate", nil)
+		return
+	end
 
-	PlaySoundFile(SOUND_FILE, "Master")
+	-- Collect candidates, then stagger backups in GUID order. If the first
+	-- sender disappears or cannot send, the remaining copies can still announce.
+	local rank = 0
+	for guid in pairs(kill.candidates) do
+		if guid < pending.playerGUID then rank = rank + 1 end
+	end
+	if GetTime() < pending.time + 1.5 + rank * 0.4 then return end
+
+	SendChatMessage(pending.text, GetChatChannel())
+	if canCommunicate and IsInGroup() then
+		SendAddonMessage(MESSAGE_PREFIX, "DONE:" .. pending.guid, GetChatChannel())
+	end
+	kill.announced = true
+	pending = nil
+	frame:SetScript("OnUpdate", nil)
+end
+
+local function HandleAddonMessage(prefix, message, channel)
+	if prefix ~= MESSAGE_PREFIX or not inNaxxramas then return end
+	if channel ~= "RAID" and channel ~= "PARTY" then return end
+	if not IsReadable(message) then return end
+	local action, targetGUID, playerGUID = strsplit(":", message)
+	if GetNPCIDFromGUID(targetGUID) ~= MR_BIGGLESWORTH_ID then return end
+	if action ~= "DONE" and action ~= "CLAIM" then return end
+	if action == "CLAIM" and (not playerGUID or strsplit("-", playerGUID) ~= "Player") then return end
+	local kill = kills[targetGUID]
+	if not kill then
+		kill = { candidates = {} }
+		kills[targetGUID] = kill
+	end
+	if action == "DONE" then
+		kill.announced = true
+	else
+		kill.candidates[playerGUID] = true
+	end
 end
 
 ------------------------------------------------------------
@@ -180,8 +226,13 @@ local function CheckInstance()
 	local _, _, _, _, _, _, _, instanceID = GetInstanceInfo()
 
 	if instanceID == NAXXRAMAS_ID then
+		inNaxxramas = true
 		EnablePartyKill()
 	else
+		inNaxxramas = false
+		kills = {}
+		pending = nil
+		frame:SetScript("OnUpdate", nil)
 		DisablePartyKill()
 	end
 end
@@ -201,8 +252,31 @@ local function HandlePartyKill(attackerGUID, targetGUID)
 	local killer = GetNameFromGUID(attackerGUID) or UNKNOWN
 	local destName = GetNameFromGUID(targetGUID) or "Mr. Bigglesworth"
 
-	AnnounceDeath(killer, destName)
+	-- Sound is always local and independent of announcement coordination.
+	PlaySoundFile(SOUND_FILE, "Master")
 	DisablePartyKill()
+
+	local text = format(L["%s killed %s, May he Rest In Peace."], killer, destName)
+	if issecretvalue and issecretvalue(text) then return end
+	if not IsInGroup() then
+		SendChatMessage(text, GetChatChannel())
+		return
+	end
+
+	local kill = kills[targetGUID]
+	if not kill then
+		kill = { candidates = {} }
+		kills[targetGUID] = kill
+	end
+	if kill.announced then return end
+	local playerGUID = UnitGUID("player")
+	if not IsReadable(playerGUID) or not playerGUID then return end
+	kill.candidates[playerGUID] = true
+	pending = { guid = targetGUID, playerGUID = playerGUID, text = text, time = GetTime() + random() * 0.3 }
+	if canCommunicate then
+		SendAddonMessage(MESSAGE_PREFIX, "CLAIM:" .. targetGUID .. ":" .. playerGUID, GetChatChannel())
+	end
+	frame:SetScript("OnUpdate", UpdateAnnouncement)
 end
 
 ------------------------------------------------------------
@@ -218,6 +292,8 @@ frame:SetScript("OnEvent", function(_, event, ...)
 	if event == "PARTY_KILL" then
 		local attackerGUID, targetGUID = ...
 		HandlePartyKill(attackerGUID, targetGUID)
+	elseif event == "CHAT_MSG_ADDON" then
+		HandleAddonMessage(...)
 	end
 end)
 
@@ -227,3 +303,4 @@ end)
 
 frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 frame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+frame:RegisterEvent("CHAT_MSG_ADDON")
