@@ -28,6 +28,6 @@
 ## Category-ruRU: Ролевая игра
 ## Category-zhCN: 角色扮演
 ## Category-zhTW: 角色扮演
-## IconTexture: Interface\AddOns\MrBigglesworthDeath\Media\Logo\SniperCat
+## IconTexture: Interface\AddOns\MrBigglesworthDeath\Media\Logo\SniperCat.png
 
 MrBigglesworthDeath.lua
